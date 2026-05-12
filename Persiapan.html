@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perancangan Pertandingan BSKK</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap');
+
+:root {
+–emas: #C9A84C;
+–emas-muda: #E8C96A;
+–merah-gelap: #6B1E1E;
+–merah: #8B2E2E;
+–krim: #FAF3E0;
+–coklat-gelap: #2C1810;
+–coklat: #4A2C1A;
+–putih: #FFFDF7;
+–kelabu: #6B6055;
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–coklat-gelap);
+color: var(–krim);
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+/* Batik Pattern Background */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image:
+radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+radial-gradient(ellipse at 80% 80%, rgba(107,30,30,0.12) 0%, transparent 50%),
+repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,168,76,0.02) 40px, rgba(201,168,76,0.02) 41px),
+repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(201,168,76,0.02) 40px, rgba(201,168,76,0.02) 41px);
+pointer-events: none;
+z-index: 0;
+}
+
+.wrapper { position: relative; z-index: 1; }
+
+/* HEADER */
+header {
+text-align: center;
+padding: 60px 40px 50px;
+border-bottom: 1px solid rgba(201,168,76,0.3);
+position: relative;
+}
+
+.ornamen-atas {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 16px;
+margin-bottom: 24px;
+}
+
+.garis-ornamen {
+height: 1px;
+width: 80px;
+background: linear-gradient(90deg, transparent, var(–emas));
+}
+.garis-ornamen.kanan {
+background: linear-gradient(90deg, var(–emas), transparent);
+}
+
+.bunga-ornamen {
+color: var(–emas);
+font-size: 20px;
+letter-spacing: 8px;
+}
+
+.label-pertandingan {
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+letter-spacing: 6px;
+color: var(–emas-muda);
+text-transform: uppercase;
+margin-bottom: 12px;
+opacity: 0.8;
+}
+
+h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(32px, 5vw, 56px);
+font-weight: 900;
+color: var(–krim);
+line-height: 1.1;
+margin-bottom: 8px;
+}
+
+h1 span {
+color: var(–emas);
+display: block;
+}
+
+.sub-tajuk {
+font-family: ‘DM Sans’, sans-serif;
+font-size: 14px;
+color: rgba(250,243,224,0.5);
+letter-spacing: 3px;
+margin-top: 16px;
+}
+
+/* RINGKASAN ACARA */
+.acara-bar {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 0;
+background: rgba(201,168,76,0.08);
+border-top: 1px solid rgba(201,168,76,0.2);
+border-bottom: 1px solid rgba(201,168,76,0.2);
+margin: 0;
+padding: 0;
+}
+
+.acara-pill {
+padding: 14px 24px;
+font-size: 12px;
+letter-spacing: 1.5px;
+color: var(–emas-muda);
+font-family: ‘Cinzel’, serif;
+border-right: 1px solid rgba(201,168,76,0.2);
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.acara-pill:last-child { border-right: none; }
+.acara-pill .dot { width: 5px; height: 5px; background: var(–emas); border-radius: 50%; }
+
+/* MAIN CONTENT */
+.kandungan {
+max-width: 960px;
+margin: 0 auto;
+padding: 60px 24px;
+display: grid;
+gap: 40px;
+}
+
+/* FASA CARDS */
+.fasa-card {
+background: rgba(255,253,247,0.04);
+border: 1px solid rgba(201,168,76,0.2);
+border-radius: 2px;
+overflow: hidden;
+transition: border-color 0.3s;
+}
+.fasa-card:hover { border-color: rgba(201,168,76,0.5); }
+
+.fasa-header {
+display: flex;
+align-items: stretch;
+background: rgba(201,168,76,0.07);
+border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+
+.fasa-nombor {
+font-family: ‘Playfair Display’, serif;
+font-size: 48px;
+font-weight: 900;
+color: rgba(201,168,76,0.15);
+padding: 20px 24px;
+min-width: 80px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-right: 1px solid rgba(201,168,76,0.15);
+line-height: 1;
+}
+
+.fasa-info {
+padding: 20px 24px;
+flex: 1;
+}
+
+.fasa-label {
+font-size: 10px;
+letter-spacing: 4px;
+color: var(–emas);
+text-transform: uppercase;
+font-family: ‘Cinzel’, serif;
+margin-bottom: 6px;
+}
+
+.fasa-tajuk {
+font-family: ‘Playfair Display’, serif;
+font-size: 22px;
+font-weight: 700;
+color: var(–krim);
+margin-bottom: 4px;
+}
+
+.fasa-tempoh {
+font-size: 12px;
+color: rgba(250,243,224,0.4);
+letter-spacing: 1px;
+}
+
+.fasa-body {
+padding: 28px 28px 32px;
+}
+
+/* KATEGORI SECTION */
+.kategori-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 16px;
+margin-bottom: 24px;
+}
+
+.kategori-block {
+background: rgba(201,168,76,0.05);
+border: 1px solid rgba(201,168,76,0.15);
+border-left: 3px solid var(–emas);
+border-radius: 2px;
+padding: 16px 18px;
+}
+
+.kategori-nama {
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+letter-spacing: 2px;
+color: var(–emas);
+margin-bottom: 10px;
+text-transform: uppercase;
+}
+
+.kategori-block ul {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.kategori-block li {
+font-size: 13px;
+color: rgba(250,243,224,0.8);
+padding-left: 14px;
+position: relative;
+line-height: 1.5;
+}
+
+.kategori-block li::before {
+content: ‘◆’;
+position: absolute;
+left: 0;
+color: var(–emas);
+font-size: 6px;
+top: 5px;
+}
+
+/* JADUAL TABLE */
+.jadual-wrap {
+overflow-x: auto;
+margin-top: 8px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 13px;
+}
+
+thead tr {
+background: rgba(201,168,76,0.12);
+border-bottom: 1px solid rgba(201,168,76,0.3);
+}
+
+th {
+padding: 12px 16px;
+text-align: left;
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 2px;
+color: var(–emas);
+font-weight: 400;
+white-space: nowrap;
+}
+
+td {
+padding: 11px 16px;
+border-bottom: 1px solid rgba(201,168,76,0.08);
+color: rgba(250,243,224,0.8);
+vertical-align: top;
+line-height: 1.5;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tbody tr:hover { background: rgba(201,168,76,0.04); }
+
+.td-aktiviti {
+font-weight: 500;
+color: var(–krim);
+}
+
+.td-minggu {
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+color: var(–emas-muda);
+white-space: nowrap;
+}
+
+.tag-acara {
+display: inline-block;
+font-size: 9px;
+padding: 2px 8px;
+border-radius: 20px;
+background: rgba(201,168,76,0.15);
+border: 1px solid rgba(201,168,76,0.3);
+color: var(–emas);
+letter-spacing: 1px;
+font-family: ‘Cinzel’, serif;
+white-space: nowrap;
+}
+
+/* NOTA PENTING */
+.nota-box {
+background: rgba(107,30,30,0.2);
+border: 1px solid rgba(107,30,30,0.4);
+border-left: 3px solid var(–merah);
+border-radius: 2px;
+padding: 16px 20px;
+margin-top: 20px;
+font-size: 13px;
+color: rgba(250,243,224,0.7);
+line-height: 1.7;
+}
+
+.nota-box strong {
+color: #E07070;
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 2px;
+display: block;
+margin-bottom: 8px;
+}
+
+/* PENUTUP */
+.penutup {
+text-align: center;
+padding: 50px 24px;
+border-top: 1px solid rgba(201,168,76,0.2);
+}
+
+.penutup-ornamen {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 20px;
+margin-bottom: 24px;
+}
+
+.garis-penutup {
+height: 1px;
+width: 60px;
+background: linear-gradient(90deg, transparent, var(–emas));
+}
+.garis-penutup.k { background: linear-gradient(90deg, var(–emas), transparent); }
+
+.penutup p {
+font-size: 13px;
+color: rgba(250,243,224,0.4);
+letter-spacing: 2px;
+font-family: ‘Cinzel’, serif;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+.acara-pill { padding: 10px 14px; font-size: 10px; }
+.fasa-body { padding: 20px 16px 24px; }
+.kategori-grid { grid-template-columns: 1fr; }
+th, td { padding: 9px 10px; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="ornamen-atas">
+      <div class="garis-ornamen"></div>
+      <div class="bunga-ornamen">✦ ✦ ✦</div>
+      <div class="garis-ornamen kanan"></div>
+    </div>
+    <div class="label-pertandingan">Perancangan Persediaan Pasukan</div>
+    <h1>Pertandingan <span>BSKK</span></h1>
+    <div class="sub-tajuk">Bahagian Seni & Kreativiti Kokurikulum</div>
+  </header>
+
+  <!-- ACARA BAR -->
+
+  <div class="acara-bar">
+    <div class="acara-pill"><span class="dot"></span>Simfoni Tradisional</div>
+    <div class="acara-pill"><span class="dot"></span>Puisi & Lagu</div>
+    <div class="acara-pill"><span class="dot"></span>Koir</div>
+    <div class="acara-pill"><span class="dot"></span>Jazz Orkestra</div>
+    <div class="acara-pill"><span class="dot"></span>Nyanyian Solo & Duet</div>
+  </div>
+
+  <!-- KANDUNGAN UTAMA -->
+
+  <div class="kandungan">
+
+```
+<!-- FASA 1 -->
+<div class="fasa-card">
+  <div class="fasa-header">
+    <div class="fasa-nombor">1</div>
+    <div class="fasa-info">
+      <div class="fasa-label">Fasa Pertama</div>
+      <div class="fasa-tajuk">Perancangan & Pengurusan</div>
+      <div class="fasa-tempoh">Minggu 1 – 2</div>
+    </div>
+  </div>
+  <div class="fasa-body">
+    <div class="kategori-grid">
+      <div class="kategori-block">
+        <div class="kategori-nama">Jawatankuasa</div>
+        <ul>
+          <li>Lantik Penyelaras Keseluruhan (Guru Penasihat)</li>
+          <li>Bentuk AJK bagi setiap acara</li>
+          <li>Agih tugas: latihan, kostum, logistik</li>
+          <li>Tentukan wakil / ketua pasukan pelajar</li>
+        </ul>
+      </div>
+      <div class="kategori-block">
+        <div class="kategori-nama">Taklimat & Peraturan</div>
+        <ul>
+          <li>Kaji syarat & rubrik pemarkahan BSKK</li>
+          <li>Semak had masa setiap persembahan</li>
+          <li>Pelajari keperluan teknikal (PA, pentas)</li>
+          <li>Daftarkan penyertaan mengikut tarikh akhir</li>
+        </ul>
+      </div>
+      <div class="kategori-block">
+        <div class="kategori-nama">Pemilihan Peserta</div>
+        <ul>
+          <li>Jalankan audisi terbuka untuk semua acara</li>
+          <li>Pilih peserta berdasarkan bakat & komitmen</li>
+          <li>Sediakan senarai sandaran (reserve)</li>
+          <li>Dapatkan kebenaran ibu bapa</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FASA 2 -->
+<div class="fasa-card">
+  <div class="fasa-header">
+    <div class="fasa-nombor">2</div>
+    <div class="fasa-info">
+      <div class="fasa-label">Fasa Kedua</div>
+      <div class="fasa-tajuk">Persediaan Artistik Mengikut Acara</div>
+      <div class="fasa-tempoh">Minggu 3 – 8</div>
+    </div>
+  </div>
+  <div class="fasa-body">
+    <div class="kategori-grid">
+
+      <div class="kategori-block">
+        <div class="kategori-nama">🎵 Simfoni Tradisional</div>
+        <ul>
+          <li>Pilih repertoir berasaskan muzik tradisional Melayu / Nusantara</li>
+          <li>Sesuaikan aransemen untuk ensembel sekolah</li>
+          <li>Latihan bahagian (seksyen) secara berasingan</li>
+          <li>Galakkan penggunaan alat tradisional (gamelan, serunai, rebab)</li>
+          <li>Latihan gabungan setiap minggu</li>
+        </ul>
+      </div>
+
+      <div class="kategori-block">
+        <div class="kategori-nama">📜 Puisi & Lagu</div>
+        <ul>
+          <li>Pilih puisi / sajak yang bertemakan kebudayaan atau patriotisme</li>
+          <li>Latihi teknik deklamasi: intonasi, diksi, ekspresi</li>
+          <li>Cipta atau pilih melodi untuk segmen lagu</li>
+          <li>Gabungkan muzik latar yang sesuai</li>
+          <li>Latihan pentas: pergerakan & blocking</li>
+        </ul>
+      </div>
+
+      <div class="kategori-block">
+        <div class="kategori-nama">🎶 Koir</div>
+        <ul>
+          <li>Pilih lagu koir (SATB / SSA / unison)</li>
+          <li>Susun ahli mengikut suara & kemahiran</li>
+          <li>Latihan vokal: pernafasan, pitch, dinamik</li>
+          <li>Latihi harmonik dan blend kumpulan</li>
+          <li>Latihan dengan iringan piano / rakaman</li>
+        </ul>
+      </div>
+
+      <div class="kategori-block">
+        <div class="kategori-nama">🎷 Jazz Orkestra</div>
+        <ul>
+          <li>Pilih repertoir jazz standard atau jazz fusion</li>
+          <li>Assign part: brass, woodwind, rhythm section</li>
+          <li>Latih teknik improvisasi asas</li>
+          <li>Bina aransemen pentas yang dinamik</li>
+          <li>Latihan swing feel & sinkopasi bersama</li>
+        </ul>
+      </div>
+
+      <div class="kategori-block">
+        <div class="kategori-nama">🎤 Solo & Duet</div>
+        <ul>
+          <li>Pilih lagu bersesuaian dengan kekuatan vokal peserta</li>
+          <li>Latihi teknik vokal: pernafasan, vibrato, falsetto</li>
+          <li>Kerjasama dengan pengiring (pianis / gitaris)</li>
+          <li>Bina ekspresi & penghayatan lagu</li>
+          <li>Simulasi pentas dengan mikrofon dan PA</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FASA 3 -->
+<div class="fasa-card">
+  <div class="fasa-header">
+    <div class="fasa-nombor">3</div>
+    <div class="fasa-info">
+      <div class="fasa-label">Fasa Ketiga</div>
+      <div class="fasa-tajuk">Penampilan & Produksi</div>
+      <div class="fasa-tempoh">Minggu 9 – 11</div>
+    </div>
+  </div>
+  <div class="fasa-body">
+    <div class="kategori-grid">
+      <div class="kategori-block">
+        <div class="kategori-nama">Kostum & Imej</div>
+        <ul>
+          <li>Reka konsep kostum mengikut tema acara</li>
+          <li>Pastikan kostum seragam & kemas</li>
+          <li>Simfoni & koir: formal / tradisional</li>
+          <li>Jazz orkestra: smart casual / tema jazz</li>
+          <li>Solo & duet: anggun & sesuai usia</li>
+        </ul>
+      </div>
+      <div class="kategori-block">
+        <div class="kategori-nama">Teknikal & Pentas</div>
+        <ul>
+          <li>Uji sistem PA, monitor & mikrofon</li>
+          <li>Rancang susun atur (staging) setiap acara</li>
+          <li>Latih masuk & keluar pentas dengan kemas</li>
+          <li>Sediakan nota teknikal untuk juruteknik bunyi</li>
+          <li>Kenal pasti keperluan pencahayaan</li>
+        </ul>
+      </div>
+      <div class="kategori-block">
+        <div class="kategori-nama">Dokumentasi</div>
+        <ul>
+          <li>Rakam latihan untuk semakan & maklum balas</li>
+          <li>Simpan rekod kehadiran latihan</li>
+          <li>Sediakan bahan bercetak (program, profil peserta)</li>
+          <li>Ambil foto & video promosi pasukan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JADUAL LATIHAN -->
+<div class="fasa-card">
+  <div class="fasa-header">
+    <div class="fasa-nombor">◈</div>
+    <div class="fasa-info">
+      <div class="fasa-label">Jadual Latihan</div>
+      <div class="fasa-tajuk">Pelan Minggu demi Minggu</div>
+      <div class="fasa-tempoh">Minggu 1 – 12</div>
+    </div>
+  </div>
+  <div class="fasa-body">
+    <div class="jadual-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Minggu</th>
+            <th>Aktiviti Utama</th>
+            <th>Acara</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-minggu">M1</td>
+            <td class="td-aktiviti">Taklimat, audisi & pembentukan pasukan</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M2</td>
+            <td class="td-aktiviti">Pemilihan repertoir & pengagihan partitur / skrip</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M3</td>
+            <td class="td-aktiviti">Latihan bahagian individu – membaca nota & lirik</td>
+            <td><span class="tag-acara">Simfoni · Jazz · Koir</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M4</td>
+            <td class="td-aktiviti">Latihan vokal teknikal; latihan deklamasi puisi</td>
+            <td><span class="tag-acara">Koir · Solo/Duet · Puisi</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M5</td>
+            <td class="td-aktiviti">Latihan gabungan pertama setiap acara</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M6</td>
+            <td class="td-aktiviti">Pemurnian aransemen & penghalusan ekspresi</td>
+            <td><span class="tag-acara">Simfoni · Jazz · Puisi</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M7</td>
+            <td class="td-aktiviti">Latihan intensif blend & harmoni</td>
+            <td><span class="tag-acara">Koir · Solo/Duet</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M8</td>
+            <td class="td-aktiviti">Mock performance – penilaian dalaman guru</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M9</td>
+            <td class="td-aktiviti">Penyesuaian kostum, staging & blocking pentas</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M10</td>
+            <td class="td-aktiviti">Latihan penuh bersama sistem PA (dress rehearsal)</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M11</td>
+            <td class="td-aktiviti">Final rehearsal & briefing teknikal hari pertandingan</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+          <tr>
+            <td class="td-minggu">M12</td>
+            <td class="td-aktiviti">✦ HARI PERTANDINGAN BSKK ✦</td>
+            <td><span class="tag-acara">Semua</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="nota-box">
+      <strong>⚠ Nota Penting</strong>
+      • Pastikan kehadiran latihan tidak kurang daripada <strong>80%</strong> bagi setiap peserta.<br>
+      • Guru Penasihat perlu hadir sekurang-kurangnya <strong>2 sesi latihan seminggu</strong>.<br>
+      • Sebarang pertukaran peserta perlu mendapat kelulusan Penyelaras sebelum Minggu 8.<br>
+      • Rakam semua sesi dari Minggu 8 ke atas untuk semakan akhir.
+    </div>
+  </div>
+</div>
+
+<!-- FASA 4 -->
+<div class="fasa-card">
+  <div class="fasa-header">
+    <div class="fasa-nombor">4</div>
+    <div class="fasa-info">
+      <div class="fasa-label">Fasa Keempat</div>
+      <div class="fasa-tajuk">Pasca Pertandingan & Penilaian</div>
+      <div class="fasa-tempoh">Selepas Pertandingan</div>
+    </div>
+  </div>
+  <div class="fasa-body">
+    <div class="kategori-grid">
+      <div class="kategori-block">
+        <div class="kategori-nama">Refleksi & Penambahbaikan</div>
+        <ul>
+          <li>Adakan sesi perbincangan bersama semua peserta</li>
+          <li>Kumpul maklum balas daripada hakim (jika ada)</li>
+          <li>Kenal pasti kelemahan untuk diperbaiki</li>
+          <li>Tulis laporan prestasi pasukan</li>
+        </ul>
+      </div>
+      <div class="kategori-block">
+        <div class="kategori-nama">Pengiktirafan & Motivasi</div>
+        <ul>
+          <li>Anugerahkan sijil / penghargaan kepada semua peserta</li>
+          <li>Kongsikan pencapaian di papan kenyataan sekolah</li>
+          <li>Sediakan memorabilia (foto, video highlight)</li>
+          <li>Rancang persediaan untuk pertandingan seterusnya</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </div><!-- end .kandungan -->
+
+  <!-- PENUTUP -->
+
+  <div class="penutup">
+    <div class="penutup-ornamen">
+      <div class="garis-penutup"></div>
+      <span style="color: var(--emas); font-size: 14px;">✦</span>
+      <div class="garis-penutup k"></div>
+    </div>
+    <p>Bersedia · Berdisiplin · Berprestasi</p>
+  </div>
+
+</div>
+</body>
+</html>
